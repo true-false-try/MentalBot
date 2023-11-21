@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.bot</groupId>
-    <artifactId>PsyBot</artifactId>
+    <artifactId>MentalBot</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>PsyBot</name>
-    <description>PsyBot</description>
+    <name>MentalBot</name>
+    <description>MentalBot</description>
     <properties>
         <java.version>17</java.version>
     </properties>
