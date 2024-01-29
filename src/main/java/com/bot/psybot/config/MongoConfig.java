@@ -13,24 +13,24 @@ import java.util.concurrent.TimeUnit;
 
 @Configuration
 public class MongoConfig {
-    @Value("${spring.data.mongodb.uri}")
+    @Value("${mongo.uri}")
     private String uri;
-    @Value("${spring.data.mongodb.database}")
+    @Value("${mongo.database}")
     private String database;
-    @Value("${mongodb.pool-max-life-time}")
+    @Value("${mongo.pool-min-life-time}")
     private Integer poolMaxLifeTime;
-    @Value("${mongodb.pool-min-life-time}")
+    @Value("${mongo.pool-min-life-time}")
     private Integer poolMinLifeTime;
 
     @Bean
     public MongoClient mongoClient() {
-        MongoClientSettings mongoSettings =
+        MongoClientSettings mongoClientSettings =
                 MongoClientSettings.builder()
                         .applyConnectionString(new ConnectionString(uri))
                         .applyToConnectionPoolSettings(settings -> {
                             settings.maxConnectionLifeTime(poolMaxLifeTime, TimeUnit.MILLISECONDS)
-                                    .minSize(poolMinLifeTime)
-                                    .maxSize(poolMaxLifeTime)
+                                    .minSize(Math.toIntExact(poolMinLifeTime))
+                                    .maxSize(Math.toIntExact(poolMaxLifeTime))
                                     .maintenanceFrequency(1, TimeUnit.MINUTES)
                                     .maintenanceInitialDelay(11, TimeUnit.MILLISECONDS)
                                     .maxConnectionIdleTime(30, TimeUnit.SECONDS)
@@ -38,11 +38,12 @@ public class MongoConfig {
                             })
                         .build();
 
-        return MongoClients.create(mongoSettings);
+        return MongoClients.create(mongoClientSettings);
     }
 
     @Bean
     public MongoTemplate mongoTemplate() {
         return new MongoTemplate(mongoClient(), database);
     }
+
 }
