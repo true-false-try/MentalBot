@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MentalBotApplication {
+public class AppBotApplication {
     public static void main(String[] args) {
         System.out.println();
-        SpringApplication.run(MentalBotApplication.class, args);
+        SpringApplication.run(AppBotApplication.class, args);
     }
 }
